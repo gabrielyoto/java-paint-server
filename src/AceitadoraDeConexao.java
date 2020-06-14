@@ -3,37 +3,34 @@ import java.util.*;
 
 public class AceitadoraDeConexao extends Thread
 {
-    private ServerSocket        pedido;
-    private ArrayList<Parceiro> usuarios;
+    private final ServerSocket pedido;
+    private final ArrayList<Parceiro> usuarios;
 
-    public AceitadoraDeConexao
-    (String porta, ArrayList<Parceiro> usuarios)
-    throws Exception
+    public AceitadoraDeConexao(String porta, ArrayList<Parceiro> usuarios) throws Exception
     {
-        if (porta==null)
-            throw new Exception ("Porta ausente");
+        if (porta == null)
+            throw new Exception("Porta ausente");
 
         try
         {
-            this.pedido =
-            new ServerSocket (Integer.parseInt(porta));
+            this.pedido = new ServerSocket(Integer.parseInt(porta));
         }
-        catch (Exception  erro)
+        catch (Exception erro)
         {
-            throw new Exception ("Porta invalida");
+            throw new Exception("Porta inválida");
         }
 
         if (usuarios==null)
-            throw new Exception ("Usuarios ausentes");
+            throw new Exception("Usuários ausentes");
 
         this.usuarios = usuarios;
     }
 
-    public void run ()
+    public void run()
     {
         for(;;)
         {
-            Socket conexao=null;
+            Socket conexao;
             try
             {
                 conexao = this.pedido.accept();
@@ -43,15 +40,24 @@ public class AceitadoraDeConexao extends Thread
                 continue;
             }
 
-            SupervisoraDeConexao supervisoraDeConexao=null;
+            SupervisoraDeConexao supervisoraDeConexao;
             try
             {
-                supervisoraDeConexao =
-                new SupervisoraDeConexao (conexao, usuarios);
+                supervisoraDeConexao = new SupervisoraDeConexao(conexao, usuarios);
             }
-            catch (Exception erro)
-            {} // sei que passei parametros corretos para o construtor
-            supervisoraDeConexao.start();
+            catch (Exception ignored)
+            {
+                continue;
+            } // sei que passei parâmetros corretos para o construtor
+
+            try
+            {
+                supervisoraDeConexao.start();
+            }
+            catch (IllegalThreadStateException ex)
+            {
+                ex.printStackTrace();
+            }
         }
     }
 }

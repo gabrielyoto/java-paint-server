@@ -14,7 +14,6 @@ public class Resultado extends Comunicado
     
     public String toString ()
     {
-		return (""+this.valorResultante);
+		return ("" + this.valorResultante);
 	}
-
 }

@@ -4,45 +4,38 @@ import java.util.*;
 
 public class SupervisoraDeConexao extends Thread
 {
-    private double valor = 0;
     private Parceiro usuario;
-    private Socket conexao;
-    private ArrayList<Parceiro> usuarios;
+    private final Socket conexao;
+    private final ArrayList<Parceiro> usuarios;
 
-    public SupervisoraDeConexao (Socket conexao, ArrayList<Parceiro> usuarios)
-    throws Exception
+    public SupervisoraDeConexao (Socket conexao, ArrayList<Parceiro> usuarios) throws Exception
     {
-        if (conexao==null)
-            throw new Exception ("Conexao ausente");
+        if (conexao == null)
+            throw new Exception("Conexão ausente");
 
-        if (usuarios==null)
-            throw new Exception ("Usuarios ausentes");
+        if (usuarios == null)
+            throw new Exception("Usuários ausentes");
 
-        this.conexao  = conexao;
+        this.conexao = conexao;
         this.usuarios = usuarios;
     }
 
     public void run ()
     {
-
         ObjectOutputStream transmissor;
         try
         {
-            transmissor =
-            new ObjectOutputStream(
-            this.conexao.getOutputStream());
+            transmissor = new ObjectOutputStream(this.conexao.getOutputStream());
         }
         catch (Exception erro)
         {
             return;
         }
-        
-        ObjectInputStream receptor=null;
+
+        ObjectInputStream receptor;
         try
         {
-            receptor=
-            new ObjectInputStream(
-            this.conexao.getInputStream());
+            receptor = new ObjectInputStream(this.conexao.getInputStream());
         }
         catch (Exception err0)
         {
@@ -50,35 +43,30 @@ public class SupervisoraDeConexao extends Thread
             {
                 transmissor.close();
             }
-            catch (Exception falha)
+            catch (Exception ignored)
             {} // so tentando fechar antes de acabar a thread
-            
             return;
         }
 
         try
         {
-            this.usuario =
-            new Parceiro (this.conexao,
-                          receptor,
-                          transmissor);
+            this.usuario = new Parceiro(this.conexao, receptor, transmissor);
         }
-        catch (Exception erro)
-        {} // sei que passei os parametros corretos
+        catch (Exception ignored)
+        {} // sei que passei os parâmetros corretos
 
         try
         {
             synchronized (this.usuarios)
             {
-                this.usuarios.add (this.usuario);
+                this.usuarios.add(this.usuario);
             }
-
 
             for(;;)
             {
-                Comunicado comunicado = this.usuario.envie ();
+                Comunicado comunicado = this.usuario.envie();
 
-                if (comunicado==null)
+                if (comunicado == null)
                     return;
                 /*else if (comunicado instanceof PedidoDeOperacao) {
                 }*/
@@ -88,8 +76,8 @@ public class SupervisoraDeConexao extends Thread
         {
             try
             {
-                transmissor.close ();
-                receptor   .close ();
+                transmissor.close();
+                receptor.close();
             }
             catch (Exception ignored)
             {} // so tentando fechar antes de acabar a thread
