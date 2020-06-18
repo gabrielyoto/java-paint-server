@@ -29,6 +29,7 @@ public class SupervisoraDeConexao extends Thread
         }
         catch (Exception erro)
         {
+            erro.printStackTrace();
             return;
         }
 
@@ -37,7 +38,7 @@ public class SupervisoraDeConexao extends Thread
         {
             receptor = new ObjectInputStream(this.conexao.getInputStream());
         }
-        catch (Exception err0)
+        catch (Exception erro)
         {
             try
             {
@@ -68,8 +69,9 @@ public class SupervisoraDeConexao extends Thread
 
                 if (comunicado == null)
                     return;
-                /*else if (comunicado instanceof PedidoDeOperacao) {
-                }*/
+                else if (comunicado instanceof PedidoDeSalvar) {
+                    System.out.println(comunicado.toString());
+                }
             }
         }
         catch (Exception erro)

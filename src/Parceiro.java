@@ -47,13 +47,14 @@ public class Parceiro
     try
     {
       this.mutEx.acquireUninterruptibly();
-      if (this.proximoComunicado==null) this.proximoComunicado = (Comunicado)this.receptor.readObject();
+      if (this.proximoComunicado == null)
+        this.proximoComunicado = (Comunicado)this.receptor.readObject();
       this.mutEx.release();
       return this.proximoComunicado;
     }
     catch (Exception erro)
     {
-      throw new Exception ("Erro de recepção");
+      throw new Exception("Erro de recepção");
     }
   }
 
@@ -62,13 +63,14 @@ public class Parceiro
     try
     {
       if (this.proximoComunicado == null)
-        this.proximoComunicado = (Comunicado)this.receptor.readObject();
+        this.proximoComunicado = (Comunicado) this.receptor.readObject();
       Comunicado ret = this.proximoComunicado;
       this.proximoComunicado = null;
       return ret;
     }
     catch (Exception erro)
     {
+      erro.printStackTrace();
       throw new Exception ("Erro de recepção");
     }
   }

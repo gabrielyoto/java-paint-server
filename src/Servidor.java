@@ -49,7 +49,7 @@ public class Servidor
       {
         synchronized (usuarios)
         {
-          ComunicadoDeDesligamento comunicadoDeDesligamento = new ComunicadoDeDesligamento ();
+          ComunicadoDeDesligamento comunicadoDeDesligamento = new ComunicadoDeDesligamento();
           for (Parceiro usuario:usuarios)
           {
             try

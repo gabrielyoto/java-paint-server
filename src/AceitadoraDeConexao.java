@@ -20,7 +20,7 @@ public class AceitadoraDeConexao extends Thread
             throw new Exception("Porta inválida");
         }
 
-        if (usuarios==null)
+        if (usuarios == null)
             throw new Exception("Usuários ausentes");
 
         this.usuarios = usuarios;
