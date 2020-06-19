@@ -1,6 +1,8 @@
 import java.io.*;
 import java.net.*;
 import java.util.*;
+import java.sql.*;
+import com.mysql.jdbc.*;
 
 public class SupervisoraDeConexao extends Thread
 {
@@ -69,8 +71,12 @@ public class SupervisoraDeConexao extends Thread
 
                 if (comunicado == null)
                     return;
-                else if (comunicado instanceof PedidoDeSalvar) {
-                    System.out.println(comunicado.toString());
+                else if (comunicado instanceof PedidoSalvamento)
+                    System.out.println(((PedidoSalvamento) comunicado).getDesenho().toString());
+                else if (comunicado instanceof PedidoParaSair) {
+                    System.out.println("Saindo");
+                    transmissor.close();
+                    receptor.close();
                 }
             }
         }
