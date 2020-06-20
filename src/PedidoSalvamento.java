@@ -1,8 +1,7 @@
-import javax.swing.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Vector;
+import java.sql.Connection;
 
 public class PedidoSalvamento extends Comunicado
 {
@@ -19,41 +18,27 @@ public class PedidoSalvamento extends Comunicado
     return this.desenho;
   }
 
-  public void salvar()
+  public void salvar(Connection conexaoBD)
   {
-  /*  {
-      File arquivo;
-      File arquivoExt;
-      String nome = arquivo.getName();
-      if (nome.split("\\.").length <= 1 ||
-          (nome.split("\\.").length > 1 && !nome.split("\\.")[1].equals("javapaint"))) {
-        arquivoExt = new File(arquivo.getAbsolutePath() + ".javapaint");
-      } else {
-        arquivoExt = arquivo;
-      }
+    {
+      String nome = desenho.getNome();
+      File arquivo = new File("desenhos/" + nome + ".javapaint");
       try {
-        if (arquivoExt.createNewFile()) {
-          System.out.println("Arquivo criado: " + arquivoExt.getName());
-        } else {
-          System.out.println("Arquivo já existe.");
-          if (JOptionPane.showConfirmDialog(Janela.this, "Arquivo já existente\n" +
-              "Deseja sobrescrever?", "Atenção", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION)
-          return;
+        if (arquivo.createNewFile()) {
+          System.out.println("Arquivo criado: " + arquivo.getName());
         }
         try {
-          FileWriter escritor = new FileWriter(arquivoExt.getAbsoluteFile());
-          for (Figura figura : figuras) {
-            escritor.write(figura.toString() + "\n");
+          FileWriter escritor = new FileWriter(arquivo.getAbsoluteFile());
+          for (String figura : desenho.getConteudo()) {
+            escritor.write(figura + "\n");
           }
           escritor.close();
         } catch (IOException ex) {
-          JOptionPane.showMessageDialog(Janela.this, "Erro na escrita do arquivo!");
           ex.printStackTrace();
         }
       } catch (IOException ex) {
-        JOptionPane.showMessageDialog(Janela.this, "Erro na criação do arquivo!");
         ex.printStackTrace();
       }
-    }*/
+    }
   }
 }

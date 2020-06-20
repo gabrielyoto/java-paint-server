@@ -9,9 +9,16 @@ public class SupervisoraDeConexao extends Thread
     private Parceiro usuario;
     private final Socket conexao;
     private final ArrayList<Parceiro> usuarios;
+    protected final String url = "jdbc:mysql://localhost:3306/paint?useTimezone=true&serverTimezone=UTC",
+        user = "Gabriel";
+    protected String password;
+    protected Connection conexaoBD;
 
     public SupervisoraDeConexao (Socket conexao, ArrayList<Parceiro> usuarios) throws Exception
     {
+        this.password = System.getenv("senha");
+        if (password == null)
+            System.err.println("Informe um campo \"senha\" como variável de ambiente para a senha do BD");
         if (conexao == null)
             throw new Exception("Conexão ausente");
 
@@ -71,8 +78,18 @@ public class SupervisoraDeConexao extends Thread
 
                 if (comunicado == null)
                     return;
-                else if (comunicado instanceof PedidoSalvamento)
+                else if (comunicado instanceof PedidoSalvamento) {
                     System.out.println(((PedidoSalvamento) comunicado).getDesenho().toString());
+                    try
+                    {
+                        conexaoBD = DriverManager.getConnection(url, user, password);
+                    }
+                    catch (Exception ex)
+                    {
+                        ex.printStackTrace();
+                    }
+                    ((PedidoSalvamento) comunicado).salvar(conexaoBD);
+                }
                 else if (comunicado instanceof PedidoParaSair) {
                     System.out.println("Saindo");
                     transmissor.close();
