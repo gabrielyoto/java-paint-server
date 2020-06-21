@@ -25,3 +25,4 @@ out/
 hs_err_pid*
 /.idea/
 /desenhos/
+/src/bd/BDConfig.java
