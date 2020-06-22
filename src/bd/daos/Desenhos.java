@@ -93,7 +93,7 @@ public class Desenhos
         //recuperação de desenho expecifico no bd
     public static desenho getDesenho (String nome) throws Exception
     {
-        Desenho desenho = null;
+        Desenho desenho = null; //corrigir pro nome da classe 
             //mudar pra código o parametro da função caso não funcione com o nome
         try 
         {
