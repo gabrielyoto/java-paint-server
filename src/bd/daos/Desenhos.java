@@ -41,7 +41,7 @@ public class Desenhos
         try 
         {
             String sql;
-            sql = "INSERT INTO desenho " +
+            sql = "INSERT INTO desenhos " +
                   "(nome, cliente, criacao, atualizacao)"+
                   " VALUES"+
                   " (?, ?, ?, ?)";

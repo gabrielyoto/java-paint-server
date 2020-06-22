@@ -2,12 +2,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.Inet4Address;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import bd.*;
+import bd.daos.Desenhos;
 
 public class PedidoSalvamento extends Comunicado
 {
@@ -24,7 +22,7 @@ public class PedidoSalvamento extends Comunicado
     return this.desenho;
   }
 
-  public void salvar(Connection conexaoBD)
+  public void salvar()
   {
     String nome = desenho.getNome();
     File arquivo = new File("desenhos/" + nome + ".javapaint");
@@ -48,13 +46,11 @@ public class PedidoSalvamento extends Comunicado
     }
     try
     {
-      DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+      DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
       String hoje = LocalDateTime.now().format(dtf);
       String ip = Inet4Address.getLocalHost().getHostAddress();
-      String query = "insert into desenhos (nome, cliente, criacao, atualizacao) values ('" + nome + "', '"
-          + ip + "', '" + hoje + "', '" + hoje + "')";
-      Statement stmt = conexaoBD.createStatement();
-      stmt.executeUpdate(query);
+      bd.dbos.Desenho desenho = new bd.dbos.Desenho(nome, hoje, hoje, ip);
+      Desenhos.inserir(desenho);
     } catch (Exception ex)
     {
       ex.printStackTrace();
