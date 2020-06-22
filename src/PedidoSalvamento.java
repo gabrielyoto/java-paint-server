@@ -27,9 +27,7 @@ public class PedidoSalvamento extends Comunicado
     String nome = desenho.getNome();
     File arquivo = new File("desenhos/" + nome + ".javapaint");
     try {
-      if (arquivo.createNewFile()) {
-        System.out.println("Arquivo criado: " + arquivo.getName());
-      }
+      arquivo.createNewFile();
       try {
         FileWriter escritor = new FileWriter(arquivo.getAbsoluteFile());
         for (String figura : desenho.getConteudo()) {

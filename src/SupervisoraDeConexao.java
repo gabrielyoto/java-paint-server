@@ -75,9 +75,9 @@ public class SupervisoraDeConexao extends Thread
                     ((PedidoSalvamento) comunicado).salvar();
                 }
                 else if (comunicado instanceof PedidoParaSair) {
-                    System.out.println("Saindo");
                     transmissor.close();
                     receptor.close();
+                    return;
                 }
             }
         }
