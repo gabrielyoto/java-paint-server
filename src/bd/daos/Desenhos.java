@@ -151,4 +151,35 @@ public class Desenhos
 
         return resultado;
     }
+        //Alterar registro no BD 
+    public static void atualizar (Desenho desenho) throws Exception
+    {
+        if(desenho==null)
+            throw new Exception ("Desenho não fornecido");
+        
+        try 
+        {
+            String sql;
+            
+            sql = "UPDATE desenho"+
+                  "SET nome=?"+
+                  "SET atualizacao=?"+
+                  "WHERE nome=?";
+
+            BDMySQL.COMANDO.prepareStatement (sql);
+
+            BDMySQL.COMANDO.setString (1, desenho.getNome());
+            BDMySQL.COMANDO.setString (2, desenho.getAtualizacao());
+            BDMySQL.COMANDO.setString (3, desenho.getNome());
+
+
+            BDMySQL.COMANDO.executeUpdate ();
+            BDMySQL.COMANDO.commit ();
+        } 
+        catch (SQLException erro) 
+        {
+            BDMySQL.COMANDO.rollback();
+            throw new Exception ("Erro ao atualizar informações do desenho");
+        }
+    }
 }
