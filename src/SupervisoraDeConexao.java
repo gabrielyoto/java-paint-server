@@ -2,6 +2,9 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 import java.sql.*;
+
+import bd.core.MeuResultSet;
+import bd.daos.Desenhos;
 import com.mysql.jdbc.*;
 
 public class SupervisoraDeConexao extends Thread
@@ -73,6 +76,21 @@ public class SupervisoraDeConexao extends Thread
                     return;
                 else if (comunicado instanceof PedidoSalvamento) {
                     ((PedidoSalvamento) comunicado).salvar();
+                }
+                else if (comunicado instanceof PedidoDesenhos) {
+                    MeuResultSet resultado = Desenhos.listar();
+                    ArrayList<Desenho> desenhos = new ArrayList<>();
+                    while (resultado.next())
+                    {
+                        desenhos.add(
+                            new Desenho(
+                                resultado.getString("nome"),
+                                resultado.getString("criacao"),
+                                resultado.getString("atualizacao")
+                            )
+                        );
+                    }
+                    usuario.receba(new ListaDesenhos(desenhos));
                 }
                 else if (comunicado instanceof PedidoParaSair) {
                     transmissor.close();

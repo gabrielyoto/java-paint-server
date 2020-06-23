@@ -90,11 +90,11 @@ public class Desenhos
         }
     }
     
-        //recuperação de desenho expecifico no bd
-    public static desenho getDesenho (String nome) throws Exception
+    //recuperação de desenho expecifico no bd
+    public static Desenho getDesenho(String nome) throws Exception
     {
-        Desenho desenho = null; //corrigir pro nome da classe 
-            //mudar pra código o parametro da função caso não funcione com o nome
+        Desenho desenho; //corrigir pro nome da classe
+        //mudar pra código o parametro da função caso não funcione com o nome
         try 
         {
             String sql;
@@ -102,23 +102,19 @@ public class Desenhos
             sql = "SELECT *"+
                   "FROM desenho"+
                   "WHERE nome = ?";
-
             BDMySQL.COMANDO.prepareStatement(sql);
-
-            BDMySQL.COMANDO.setNome (1, desenho.getNome());
-
-            MeuResultSet resultado = (MeuResultSet) BDMySQL.COMANDO.executeQuery ();
+            BDMySQL.COMANDO.setString(1, nome);
+            MeuResultSet resultado = (MeuResultSet)BDMySQL.COMANDO.executeQuery();
 
             if (!resultado.first())
                 throw new Exception ("Desenho não encontrado");
             
-            desenho = new desenho (
-                resultado.getNome ("nome"),
-                reselutado.getCriacao ("criacao"),
-                resultado.getAtualizacao ("atualizacao"),
-                resultado.getIp ("ip");
-            )
-                
+            desenho = new Desenho(
+                resultado.getString("nome"),
+                resultado.getString("criacao"),
+                resultado.getString("atualizacao"),
+                resultado.getString("ip")
+            );
         } 
         catch (SQLException erro) 
         {
@@ -129,20 +125,20 @@ public class Desenhos
     }
       
     //recuperação de todos os desenhos do bd mas acho q não precisa, pq o cliente só pode pegar um por vez 
-    public static MeuResultSet getDesenhos () throws Exception
+    public static MeuResultSet listar() throws Exception
     {
-        MeuResultSet resultado = null;
+        MeuResultSet resultado;
         
         try 
         {
             String sql;
 
             sql = "SELECT *"+
-                  "FROM desenho";
+                  "FROM desenhos";
 
             BDMySQL.COMANDO.prepareStatement(sql);
 
-            resultado = (MeuResultSet) BDMySQL.COMANDO.executeQuery ();
+            resultado = (MeuResultSet)BDMySQL.COMANDO.executeQuery();
         } 
         catch (Exception e) 
         {

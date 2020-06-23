@@ -16,12 +16,14 @@ public class Desenho implements Cloneable
 
     public Desenho(String nome, String criacao, String atualizacao, String ip) throws Exception
     {
-        try {
+        try
+        {
             this.setNome(nome);
             this.setCriacao(criacao);
             this.setAtualizacao(atualizacao);
             this.setIp(ip);
-        } catch (Exception ex)
+        }
+        catch (Exception ex)
         {
             throw new Exception(ex);
         }
@@ -41,10 +43,10 @@ public class Desenho implements Cloneable
             throw new Exception ("Data de criação inválida");
         try
         {
-            String[] data = criacao.split("/");
-            int dia = Integer.parseInt(data[0]);
+            String[] data = criacao.split("-");
+            int dia = Integer.parseInt(data[2]);
             int mes = Integer.parseInt(data[1]);
-            int ano = Integer.parseInt(data[2]);
+            int ano = Integer.parseInt(data[0]);
             if (dia < 0 || dia > 31)
                 throw new Exception("Dia inválido!");
             if (mes < 0 || mes > 12)
@@ -59,7 +61,7 @@ public class Desenho implements Cloneable
         catch (Exception ex)
         {
             ex.printStackTrace();
-            throw new Exception("Formato de data inválido! Deveria ser dd/MM/aaaa");
+            throw new Exception("Formato de data inválido! Deveria ser aaaa-MM-yyyy");
         }
     }
 
@@ -74,10 +76,10 @@ public class Desenho implements Cloneable
             throw new Exception ("Data de atualização inválida");
         try
         {
-            String[] data = atualizacao.split("/");
-            int dia = Integer.parseInt(data[0]);
+            String[] data = atualizacao.split("-");
+            int dia = Integer.parseInt(data[2]);
             int mes = Integer.parseInt(data[1]);
-            int ano = Integer.parseInt(data[2]);
+            int ano = Integer.parseInt(data[0]);
             if (dia < 0 || dia > 31)
                 throw new Exception("Dia inválido!");
             if (mes < 0 || mes > 12)
@@ -92,7 +94,7 @@ public class Desenho implements Cloneable
         catch (Exception ex)
         {
             ex.printStackTrace();
-            throw new Exception("Formato de data inválido! Deveria ser dd/MM/aaaa");
+            throw new Exception("Formato de data inválido! Deveria ser aaaa-MM-dd");
         }
     }
 
