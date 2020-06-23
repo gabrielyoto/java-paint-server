@@ -1,11 +1,11 @@
 import java.io.*;
 import java.net.*;
 import java.util.*;
-import java.sql.*;
 
 import bd.core.MeuResultSet;
 import bd.daos.Desenhos;
-import com.mysql.jdbc.*;
+
+import javax.swing.*;
 
 public class SupervisoraDeConexao extends Thread
 {
@@ -79,18 +79,32 @@ public class SupervisoraDeConexao extends Thread
                 }
                 else if (comunicado instanceof PedidoDesenhos) {
                     MeuResultSet resultado = Desenhos.listar();
-                    ArrayList<Desenho> desenhos = new ArrayList<>();
+                    ArrayList<String> desenhos = new ArrayList<>();
                     while (resultado.next())
                     {
-                        desenhos.add(
-                            new Desenho(
-                                resultado.getString("nome"),
-                                resultado.getString("criacao"),
-                                resultado.getString("atualizacao")
-                            )
-                        );
+                        desenhos.add(resultado.getString("nome"));
                     }
                     usuario.receba(new ListaDesenhos(desenhos));
+                }
+                else if (comunicado instanceof PedidoDesenho) {
+                    bd.dbos.Desenho desenhoBD = Desenhos.getDesenho(((PedidoDesenho)comunicado).getNome());
+                    Desenho desenho = new Desenho(
+                        desenhoBD.getNome(),
+                        desenhoBD.getCriacao(),
+                        desenhoBD.getAtualizacao()
+                    );
+                    File selectedFile = new File("desenhos/" + desenhoBD.getNome() + ".javapaint");
+                    try {
+                        Scanner leitor = new Scanner(selectedFile);
+                        while (leitor.hasNextLine()) {
+                            String figura = leitor.nextLine();
+                            desenho.addFigura(figura);
+                        }
+                        leitor.close();
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
+                    usuario.receba(desenho);
                 }
                 else if (comunicado instanceof PedidoParaSair) {
                     transmissor.close();

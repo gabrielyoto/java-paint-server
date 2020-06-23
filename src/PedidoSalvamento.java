@@ -44,7 +44,7 @@ public class PedidoSalvamento extends Comunicado
     }
     try
     {
-      DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+      DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
       String hoje = LocalDateTime.now().format(dtf);
       String ip = Inet4Address.getLocalHost().getHostAddress();
       bd.dbos.Desenho desenho = new bd.dbos.Desenho(nome, hoje, hoje, ip);

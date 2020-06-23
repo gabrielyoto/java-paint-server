@@ -99,9 +99,7 @@ public class Desenhos
         {
             String sql;
 
-            sql = "SELECT *"+
-                  "FROM desenho"+
-                  "WHERE nome = ?";
+            sql = "SELECT * FROM desenhos WHERE nome = ?";
             BDMySQL.COMANDO.prepareStatement(sql);
             BDMySQL.COMANDO.setString(1, nome);
             MeuResultSet resultado = (MeuResultSet)BDMySQL.COMANDO.executeQuery();
@@ -113,7 +111,7 @@ public class Desenhos
                 resultado.getString("nome"),
                 resultado.getString("criacao"),
                 resultado.getString("atualizacao"),
-                resultado.getString("ip")
+                resultado.getString("cliente")
             );
         } 
         catch (SQLException erro) 

@@ -1,4 +1,8 @@
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 
 public class Desenho extends Comunicado
@@ -14,6 +18,14 @@ public class Desenho extends Comunicado
     this.nome = nome;
     this.dataCriacao = dataCriacao;
     this.dataUltimaAtualizacao = dataUltimaAtualizacao;
+  }
+
+  public Desenho(String nome, Date dataCriacao, Date dataUltimaAtualizacao)
+  {
+    SimpleDateFormat dtf = new SimpleDateFormat("yyyy-MM-dd");
+    this.nome = nome;
+    this.dataCriacao = dtf.format(dataCriacao);
+    this.dataUltimaAtualizacao = dtf.format(dataUltimaAtualizacao);
   }
 
   public int addFigura(String figura)
