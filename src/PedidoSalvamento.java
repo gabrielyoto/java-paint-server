@@ -27,13 +27,6 @@ public class PedidoSalvamento extends Comunicado
     String nome = desenho.getNome();
     File arquivo = new File("desenhos/" + nome + ".javapaint");
     try {
-        if(nome.equals(ArrayList<String>desenhos(getDesenhos())))
-         String atualizacao = desenho;
-         atualizar(Desenho atualizacao);
-    } catch (IOException ex){
-        ex.printStackTrace();
-        return;
-    try {
       if (arquivo.createNewFile()) {
         System.out.println("Arquivo criado: " + arquivo.getName());
       }
