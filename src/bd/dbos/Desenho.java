@@ -1,9 +1,6 @@
 package bd.dbos;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -15,6 +12,21 @@ public class Desenho implements Cloneable
     private String ip;
 
     public Desenho(String nome, String criacao, String atualizacao, String ip) throws Exception
+    {
+        try
+        {
+            this.setNome(nome);
+            this.setCriacao(criacao);
+            this.setAtualizacao(atualizacao);
+            this.setIp(ip);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex);
+        }
+    }
+
+    public Desenho(String nome, Date criacao, Date atualizacao, String ip) throws Exception
     {
         try
         {
