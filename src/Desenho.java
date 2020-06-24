@@ -1,3 +1,4 @@
+import java.net.Inet4Address;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -11,9 +12,10 @@ public class Desenho extends Comunicado
   private String nome;
   private final String dataCriacao;
   private final String dataUltimaAtualizacao;
+  private String ip = "";
   private final ArrayList<String> conteudo = new ArrayList<>();
 
-  public Desenho(String nome, String dataCriacao, String dataUltimaAtualizacao)
+  public Desenho(String nome, String dataCriacao, String dataUltimaAtualizacao) throws Exception
   {
     this.nome = nome;
     this.dataCriacao = dataCriacao;
@@ -87,5 +89,9 @@ public class Desenho extends Comunicado
 
   public String getDataUltimaAtualizacao() {
     return dataUltimaAtualizacao;
+  }
+
+  public String getIp() {
+    return ip;
   }
 }
