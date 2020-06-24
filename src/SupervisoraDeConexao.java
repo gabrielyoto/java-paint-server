@@ -75,7 +75,12 @@ public class SupervisoraDeConexao extends Thread
                 if (comunicado == null)
                     return;
                 else if (comunicado instanceof PedidoSalvamento) {
-                    ((PedidoSalvamento) comunicado).salvar();
+                    String nome = desenho.getNome();
+                        if(nome.equals(ArrayList<String>desenhos(getDesenhos()))) {
+                         String atualizacao = desenho;
+                         atualizar(Desenho atualizacao);
+                        } 
+                        else((PedidoSalvamento) comunicado).salvar();                 
                 }
                 else if (comunicado instanceof PedidoDesenhos) {
                     MeuResultSet resultado = Desenhos.listar();
