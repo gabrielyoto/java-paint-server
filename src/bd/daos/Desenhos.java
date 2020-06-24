@@ -17,7 +17,7 @@ public class Desenhos
             String sql;
 
             sql = "SELECT * " +
-                  "FROM desenho " +
+                  "FROM desenhos " +
                   "WHERE nome = ?";
 
             BDMySQL.COMANDO.prepareStatement(sql);
@@ -148,27 +148,18 @@ public class Desenhos
         //Alterar registro no BD 
     public static void atualizar (Desenho desenho) throws Exception
     {
-        if(desenho==null)
+        if(desenho == null)
             throw new Exception ("Desenho não fornecido");
-        
         try 
         {
-            String sql;
-            
-            sql = "UPDATE desenho"+
-                  "SET nome=?"+
-                  "SET atualizacao=?"+
-                  "WHERE nome=?";
+            String sql = "UPDATE desenhos SET atualizacao = ? WHERE nome = ?";
 
             BDMySQL.COMANDO.prepareStatement (sql);
+            BDMySQL.COMANDO.setDate(1, new Date(desenho.getAtualizacao().getTime()));
+            BDMySQL.COMANDO.setString(2, desenho.getNome());
 
-            BDMySQL.COMANDO.setString (1, desenho.getNome());
-            BDMySQL.COMANDO.setString (2, desenho.getAtualizacao());
-            BDMySQL.COMANDO.setString (3, desenho.getNome());
-
-
-            BDMySQL.COMANDO.executeUpdate ();
-            BDMySQL.COMANDO.commit ();
+            BDMySQL.COMANDO.executeUpdate();
+            BDMySQL.COMANDO.commit();
         } 
         catch (SQLException erro) 
         {

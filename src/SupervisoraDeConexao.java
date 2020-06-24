@@ -5,8 +5,6 @@ import java.util.*;
 import bd.core.MeuResultSet;
 import bd.daos.Desenhos;
 
-import javax.swing.*;
-
 public class SupervisoraDeConexao extends Thread
 {
     private Parceiro usuario;
@@ -75,12 +73,7 @@ public class SupervisoraDeConexao extends Thread
                 if (comunicado == null)
                     return;
                 else if (comunicado instanceof PedidoSalvamento) {
-                    String nome = desenho.getNome();
-                        if(nome.equals(ArrayList<String>desenhos(getDesenhos()))) {
-                         String atualizacao = desenho;
-                         atualizar(Desenho atualizacao);
-                        } 
-                        else((PedidoSalvamento) comunicado).salvar();                 
+                    ((PedidoSalvamento) comunicado).salvar();
                 }
                 else if (comunicado instanceof PedidoDesenhos) {
                     MeuResultSet resultado = Desenhos.listar();
