@@ -169,7 +169,7 @@ public class Desenhos
             BDMySQL.COMANDO.prepareStatement (sql);
 
             BDMySQL.COMANDO.setString (1, desenho.getNome());
-            BDMySQL.COMANDO.setString (2, desenho.getAtualizacao());
+            BDMySQL.COMANDO.setDate   (2, new Date(desenho.getAtualizacao().getTime()));
             BDMySQL.COMANDO.setString (3, desenho.getNome());
 
 
